@@ -6,7 +6,8 @@ The .htaccess file will be updated each file a template is created or edited, an
 
 Create a template that would produce desirable .htaccess (use any EE tags) and provide it in extension settings (as well as path to your .htaccess file) - and you're done!
 
-Below is an example template that makes use of ExpressionEngine query module
+Below is an example template that makes use of ExpressionEngine query module.
+You can have any EE tags in the template, they all will be processed as usually. You can also use special {site_pages} variable, which will return pipe-separated list of all pages created by Pages module.
 I suggest to set template type to CSS for better preview
 
 #-------------------start .htaccess-------------------------------------------------
