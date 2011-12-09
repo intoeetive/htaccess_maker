@@ -1,0 +1,68 @@
+.htaccess maker can be used to create .htaccess file out of regular EE template. The .htaccess files can be used to remove index.php from site URLs and to make various types of URL redirects/rewrites - their powers is almost endless.
+
+Now you can use all power of ExpressionEngine templates to create the rules that you want - and no longer need to update files manually.
+
+The .htaccess file will be updated each file a template is created or edited, and also you can invoke update from module's CP.
+
+Create a template that would produce desirable .htaccess (use any EE tags) and provide it in extension settings (as well as path to your .htaccess file) - and you're done!
+
+Below is an example template that makes use of ExpressionEngine query module
+I suggest to set template type to CSS for better preview
+
+# EE 404 page for missing pages
+ErrorDocument 404 /index.php/site/404
+
+# Simple 404 for missing files
+
+  ErrorDocument 404 "File Not Found"
+
+
+RewriteEngine On
+RewriteBase /
+
+# add the www
+RewriteCond %{HTTP_HOST} ^domain.com
+RewriteRule ^(.*)$ http://www.domain.com/$1 [R=301,L]
+
+# Remove the trailing slash to paths without an extension
+RewriteCond %{REQUEST_URI} /$
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.+)/$ $1 [L,R=301]
+
+######### NOTE:  longer URLs should be listed before the similar shorter ones.
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# This block is used to let us use different templates for category, subcategory and view page, while URL structure remains the same
+# It lets us to now show the actual template used
+{exp:query sql="SELECT cat_url_title FROM exp_categories WHERE group_id=3 AND parent_id=0"}
+RewriteRule ^about/product/{cat_url_title}(.*)$ /index.php/product/category/{cat_url_title}$1 [L]{/exp:query}
+{exp:query sql="SELECT cat_url_title FROM exp_categories WHERE group_id=3 AND parent_id!=0"}
+RewriteRule ^about/product/{cat_url_title}/(.+)$ /index.php/product/view/{cat_url_title}/$1 [L]{/exp:query}
+{exp:query sql="SELECT cat_url_title FROM exp_categories WHERE group_id=3 AND parent_id!=0"}
+RewriteRule ^about/product/{cat_url_title}(.*)$ /index.php/product/subcategory/{cat_url_title}$1 [L]{/exp:query}
+
+RewriteRule ^about/product(.*)$ /index.php/product$1 [L]
+
+{exp:query sql="SELECT cat_url_title FROM exp_categories WHERE group_id=4 AND parent_id=44"}
+RewriteRule ^about/{cat_url_title}/(.+)$ /index.php/about/entry/$1 [L]
+RewriteRule ^about/{cat_url_title}(.*)$ /index.php/about/list/{cat_url_title}$1 [L]{/exp:query}
+
+
+# Remove index.php
+# Uses the "include method"
+# http://expressionengine.com/wiki/Remove_index.php_From_URLs/#Include_List_Method
+RewriteCond %{QUERY_STRING} !^(ACT=.*)$ [NC]
+RewriteCond %{REQUEST_URI} !(\.[a-zA-Z0-9]{1,5})$
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+# list all template groups
+RewriteCond %{REQUEST_URI} ^/({exp:query sql="SELECT group_name FROM exp_template_groups" backspace="1"}{group_name}|{/exp:query}) [NC,OR]
+RewriteCond %{REQUEST_URI} ^/(member|P[0-9]{2,8}) [NC]
+RewriteRule (.*) /index.php/$1 [L]
+
+
+Note that the add-on is not yet MSM compatible.
+
+Top of page
