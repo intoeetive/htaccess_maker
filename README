@@ -64,5 +64,3 @@ RewriteRule (.*) /index.php/$1 [L]
 
 
 Note that the add-on is not yet MSM compatible.
-
-Top of page
