@@ -79,13 +79,16 @@ class Htaccess_maker_mcp {
 
 		$pages = '';
         $site_pages = $this->EE->config->item('site_pages');
-        $i = $this->EE->config->item('site_id');
-        foreach ($site_pages[$i]['uris'] as $page)
+        if (!empty($site_pages))
         {
-            $pages .= trim($page, '/')."|";
+	        $i = $this->EE->config->item('site_id');
+	        foreach ($site_pages[$i]['uris'] as $page)
+	        {
+	            $pages .= trim($page, '/')."|";
+	        }
+	        $pages .= 'htaccess_maker_fake_page';
         }
-        $pages .= 'htaccess_maker_fake_page';
-        
+			        
         $output = $this->EE->TMPL->swap_var_single('site_pages', $pages, $output);
 
         if ( ! $fp = @fopen($this->settings['htaccess_path'], FOPEN_WRITE_CREATE_DESTRUCTIVE))
