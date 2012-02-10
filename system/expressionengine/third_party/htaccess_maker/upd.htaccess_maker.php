@@ -10,10 +10,8 @@
  Lecensed under MIT License
  http://www.opensource.org/licenses/mit-license.php
 =====================================================
- This software is based upon and derived from
- ExpressionEngine software protected under
- copyright dated 2004 - 2011. Please see
- http://expressionengine.com/docs/license.html
+ This software is intended for usage with
+ ExpressionEngine CMS, version 2.0 or higher
 =====================================================
  File: upd.htaccess_maker.php
 -----------------------------------------------------
@@ -26,11 +24,11 @@ if ( ! defined('EXT'))
     exit('Invalid file request');
 }
 
-
+require_once PATH_THIRD.'htaccess_maker/config.php';
 
 class Htaccess_maker_upd {
 
-    var $version = '1.1.0';
+    var $version = HTACCESS_MAKER_ADDON_VERSION;
     
     function __construct() { 
         // Make a local reference to the ExpressionEngine super object 

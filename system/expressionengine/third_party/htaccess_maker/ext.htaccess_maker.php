@@ -6,14 +6,12 @@
 -----------------------------------------------------
  http://www.intoeetive.com/
 -----------------------------------------------------
- Copyright (c) 2011 Yuri Salimovskiy
+ Copyright (c) 2011-2012 Yuri Salimovskiy
  Lecensed under MIT License
  http://www.opensource.org/licenses/mit-license.php
 =====================================================
- This software is based upon and derived from
- ExpressionEngine software protected under
- copyright dated 2004 - 2011. Please see
- http://expressionengine.com/docs/license.html
+ This software is intended for usage with
+ ExpressionEngine CMS, version 2.0 or higher
 =====================================================
  File: ext.htaccess_maker.php
 -----------------------------------------------------
@@ -26,10 +24,12 @@ if ( ! defined('EXT'))
 	exit('Invalid file request');
 }
 
+require_once PATH_THIRD.'htaccess_maker/config.php';
+
 class Htaccess_maker_ext {
 
-	var $name	     	= '.htaccess maker';
-	var $version 		= '1.1.0';
+	var $name	     	= HTACCESS_MAKER_ADDON_NAME;
+	var $version 		= HTACCESS_MAKER_ADDON_VERSION;
 	var $description	= 'Create .htaccess file from EE template';
 	var $settings_exist	= 'y';
 	var $docs_url		= 'http://www.intoeetive.com/docs/htaccess_maker.html';

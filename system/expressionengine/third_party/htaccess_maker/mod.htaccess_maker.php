@@ -10,10 +10,8 @@
  Lecensed under MIT License
  http://www.opensource.org/licenses/mit-license.php
 =====================================================
- This software is based upon and derived from
- ExpressionEngine software protected under
- copyright dated 2004 - 2011. Please see
- http://expressionengine.com/docs/license.html
+ This software is intended for usage with
+ ExpressionEngine CMS, version 2.0 or higher
 =====================================================
  File: mod.htaccess_maker.php
 -----------------------------------------------------

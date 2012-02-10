@@ -10,10 +10,8 @@
  Lecensed under MIT License
  http://www.opensource.org/licenses/mit-license.php
 =====================================================
- This software is based upon and derived from
- ExpressionEngine software protected under
- copyright dated 2004 - 2011. Please see
- http://expressionengine.com/docs/license.html
+ This software is intended for usage with
+ ExpressionEngine CMS, version 2.0 or higher
 =====================================================
  File: mcp.htaccess_maker.php
 -----------------------------------------------------
@@ -26,11 +24,11 @@ if ( ! defined('EXT'))
     exit('Invalid file request');
 }
 
-
+require_once PATH_THIRD.'htaccess_maker/config.php';
 
 class Htaccess_maker_mcp {
 
-    var $version = '1.1.0';
+    var $version = HTACCESS_MAKER_ADDON_VERSION;
     
     function __construct() { 
         // Make a local reference to the ExpressionEngine super object 
@@ -78,10 +76,6 @@ class Htaccess_maker_mcp {
 
         $this->EE->TMPL->fetch_and_parse($tmpl_q->row('group_name'), $tmpl_q->row('template_name'));
         $output = $this->EE->TMPL->parse_globals($this->EE->TMPL->final_template); 
-        
-        $this->EE->db->select('site_pages, site_id');
-		$this->EE->db->where('site_id', $this->EE->config->item('site_id'));
-		$query = $this->EE->db->get('sites');
 
 		$pages = '';
         $site_pages = $this->EE->config->item('site_pages');
